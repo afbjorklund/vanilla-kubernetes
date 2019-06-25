@@ -1,0 +1,64 @@
+---
+# https://kubernetes.io/docs/setup/production-environment/tools/kubeadm/install-kubeadm/
+
+- name: disable swap (swapoff)
+  shell: swapoff -a
+
+- name: disable swap in fstab
+  replace:
+    path: /etc/fstab
+    regexp: '^(.+?\sswap\s+sw\s+.*)$'
+    replace: '# \1'
+
+- name: install pre-requisites
+  apt:
+    name: "{{ packages }}"
+  vars:
+    packages:
+      - apt-transport-https
+      - ca-certificates
+      - curl
+      - gnupg-agent
+      - software-properties-common
+
+- name: add apt key
+  apt_key:
+    url: "{{ kubernetes_gpgkey }}"
+    state: present
+
+- name: add apt repo
+  apt_repository:
+    repo: "{{ kubernetes_repository }}"
+    state: present
+    update_cache: yes
+
+- name: install packages
+  apt:
+    name: "{{ packages }}"
+    state: latest
+  vars:
+    packages:
+      - kubeadm
+      - kubelet
+      - kubectl
+
+- name: hold packages
+  shell: apt-mark hold kubeadm kubelet kubectl
+
+- name: images list
+  shell: kubeadm config images list
+  register: list
+
+- debug: msg="{{ list.stdout.splitlines() }}"
+
+- name: images load
+  shell: |
+    test -e /images/images.tgz && zcat /images/images.tgz | docker load
+
+- name: images pull
+  shell: kubeadm config images pull
+
+- name: images save
+  shell: |
+    test -e /images/images.tgz || kubeadm config images list | xargs docker save | gzip -9 > /images/images.tgz
+    kubeadm config images list > /images/images.txt

@@ -1,0 +1,58 @@
+---
+# https://docs.docker.com/install/linux/docker-ce/ubuntu/
+
+- name: install pre-requisites
+  apt:
+    name: "{{ packages }}"
+  vars:
+    packages:
+      - apt-transport-https
+      - ca-certificates
+      - curl
+      - gnupg-agent
+      - software-properties-common
+
+- name: add apt key
+  apt_key:
+    url: "{{ docker_gpgkey }}"
+    state: present
+
+- name: add apt repo
+  apt_repository:
+    repo: "{{ docker_repository }}"
+    state: present
+    update_cache: yes
+
+- name: config directory
+  file:
+    path: /etc/docker
+    state: directory
+    owner: root
+    group: root
+    mode: '0700'
+
+- name: config docker
+  copy:
+    src: daemon.json
+    dest: /etc/docker/daemon.json
+    owner: root
+    group: root
+    mode: '0644'
+
+- name: install docker
+  apt:
+    name: "{{ packages }}"
+    state: latest
+  vars:
+    packages:
+      - docker-ce
+      - docker-ce-cli
+      - containerd.io
+
+- name: add user to docker group
+  user:
+    name='{{ item }}'
+    groups=docker
+    append=yes
+  with_items:
+    "{{ ansible_user }}"

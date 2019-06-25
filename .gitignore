@@ -1,0 +1,6 @@
+.vagrant
+.ansible
+facts
+images
+*.orig
+*.log
