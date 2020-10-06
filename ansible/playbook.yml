@@ -4,5 +4,3 @@
   roles:
     - docker
     - kubeadm
-  vars:
-    ubuntu_release: xenial

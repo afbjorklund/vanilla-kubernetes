@@ -30,7 +30,23 @@
   apt_repository:
     repo: "{{ kubernetes_repository }}"
     state: present
-    update_cache: yes
+    update_cache: true
+
+- name: config directory
+  file:
+    path: /var/lib/kubelet
+    state: directory
+    owner: root
+    group: root
+    mode: 0755
+
+- name: config file
+  copy:
+    src: config.yaml
+    dest: /var/lib/kubelet/config.yaml
+    owner: root
+    group: root
+    mode: 0644
 
 - name: install packages
   apt:
@@ -42,12 +58,20 @@
       - kubelet
       - kubectl
 
-- name: hold packages
-  shell: apt-mark hold kubeadm kubelet kubectl
+# See https://github.com/ansible/ansible-modules-core/issues/19 (from 2014)
 
-- name: images list
-  shell: kubeadm config images list
-  register: list
+- name: show hold
+  command: apt-mark showhold
+  register: held_packages
+  changed_when: false
+
+- name: hold packages
+  shell: apt-mark hold {{ item }}
+  changed_when: "item not in held_packages.stdout"
+  with_items:
+    - kubeadm
+    - kubelet
+    - kubectl
 
 - debug: msg="{{ list.stdout.splitlines() }}"
 

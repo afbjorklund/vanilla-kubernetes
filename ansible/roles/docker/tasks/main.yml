@@ -21,7 +21,7 @@
   apt_repository:
     repo: "{{ docker_repository }}"
     state: present
-    update_cache: yes
+    update_cache: true
 
 - name: config directory
   file:
@@ -29,17 +29,17 @@
     state: directory
     owner: root
     group: root
-    mode: '0700'
+    mode: 0755
 
-- name: config docker
+- name: config file
   copy:
     src: daemon.json
     dest: /etc/docker/daemon.json
     owner: root
     group: root
-    mode: '0644'
+    mode: 0644
 
-- name: install docker
+- name: install packages
   apt:
     name: "{{ packages }}"
     state: latest
@@ -48,6 +48,8 @@
       - docker-ce
       - docker-ce-cli
       - containerd.io
+
+# https://docs.docker.com/engine/install/linux-postinstall/
 
 - name: add user to docker group
   user:
