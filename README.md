@@ -138,7 +138,7 @@ You need one master, and one or more nodes (formerly known as minions).
 Master:
 
 ```shell
-kubeadm init [--pod-network-cidr=...]
+kubeadm init [--pod-network-cidr=10.244.0.0/16]
 ```
 
 <https://kubernetes.io/docs/reference/setup-tools/kubeadm/kubeadm-init/>
@@ -174,6 +174,16 @@ A cluster network needs to be deployed as well, two popular choices are:
 These are normally deployed as resources, by using a `kubectl` command.
 
 See: <https://kubernetes.io/docs/setup/production-environment/tools/kubeadm/create-cluster-kubeadm/#pod-network>
+
+#### Flannel
+
+> Flannel is a way to configure a layer 3 network fabric designed for Kubernetes.
+
+<https://github.com/coreos/flannel>
+
+```shell
+kubectl apply -f https://raw.githubusercontent.com/coreos/flannel/v0.14.0/Documentation/kube-flannel.yml
+```
 
 ### Images
 
