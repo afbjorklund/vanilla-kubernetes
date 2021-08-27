@@ -177,19 +177,19 @@ See: <https://kubernetes.io/docs/setup/production-environment/tools/kubeadm/crea
 
 ### Images
 
-As per Kubernetes v1.15.0, here is the list of container images used:
+As per Kubernetes v1.20.0, here is the list of container images used:
 
 ```text
-k8s.gcr.io/kube-apiserver:v1.15.0
-k8s.gcr.io/kube-controller-manager:v1.15.0
-k8s.gcr.io/kube-scheduler:v1.15.0
-k8s.gcr.io/kube-proxy:v1.15.0
-k8s.gcr.io/pause:3.1
-k8s.gcr.io/etcd:3.3.10
-k8s.gcr.io/coredns:1.3.1
+k8s.gcr.io/kube-apiserver:v1.20.0
+k8s.gcr.io/kube-controller-manager:v1.20.0
+k8s.gcr.io/kube-scheduler:v1.20.0
+k8s.gcr.io/kube-proxy:v1.20.0
+k8s.gcr.io/pause:3.2
+k8s.gcr.io/etcd:3.4.13-0
+k8s.gcr.io/coredns:1.7.0
 ```
 
-They total a download size of 180 MiB, in their default compressed form.
+They total a download size of 210 MiB, in their default compressed form.
 
 ## References
 
