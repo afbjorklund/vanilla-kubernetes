@@ -175,39 +175,13 @@ These are normally deployed as resources, by using a `kubectl` command.
 
 See: <https://kubernetes.io/docs/setup/production-environment/tools/kubeadm/create-cluster-kubeadm/#pod-network>
 
-#### Flannel
-
-> Flannel is a way to configure a layer 3 network fabric designed for Kubernetes.
-
-<https://github.com/coreos/flannel>
-
-```shell
-kubectl apply -f https://raw.githubusercontent.com/coreos/flannel/v0.14.0/Documentation/kube-flannel.yml
-```
-
-### Dashboard
-
-> Kubernetes Dashboard is a general purpose, web-based UI for Kubernetes clusters.
-
-<https://github.com/kubernetes/dashboard>
-
-```shell
-kubectl apply -f https://raw.githubusercontent.com/kubernetes/dashboard/v2.3.1/aio/deploy/recommended.yaml
-```
-
-### Metrics Server
-
-> Metrics Server collects resource metrics and exposes them in Kubernetes apiserver.
-
-<https://github.com/kubernetes-sigs/metrics-server>
-
-```shell
-kubectl apply -f https://github.com/kubernetes-sigs/metrics-server/releases/download/v0.5.0/components.yaml
-```
-
 ### Images
 
 As per Kubernetes v1.20.0, here is the list of container images used:
+
+```shell
+kubeadm config images list
+```
 
 ```text
 k8s.gcr.io/kube-apiserver:v1.20.0
@@ -220,6 +194,48 @@ k8s.gcr.io/coredns:1.7.0
 ```
 
 They total a download size of 210 MiB, in their default compressed form.
+
+### Flannel
+
+> Flannel is a way to configure a layer 3 network fabric designed for Kubernetes.
+
+<https://github.com/coreos/flannel>
+
+```shell
+kubectl apply -f https://raw.githubusercontent.com/coreos/flannel/v0.14.0/Documentation/kube-flannel.yml
+```
+
+```text
+quay.io/coreos/flannel:v0.14.0
+```
+
+### Dashboard
+
+> Kubernetes Dashboard is a general purpose, web-based UI for Kubernetes clusters.
+
+<https://github.com/kubernetes/dashboard>
+
+```shell
+kubectl apply -f https://raw.githubusercontent.com/kubernetes/dashboard/v2.3.1/aio/deploy/recommended.yaml
+```
+
+```text
+docker.io/kubernetesui/dashboard:v2.3.1
+```
+
+### Metrics Server
+
+> Metrics Server collects resource metrics and exposes them in Kubernetes apiserver.
+
+<https://github.com/kubernetes-sigs/metrics-server>
+
+```shell
+kubectl apply -f https://github.com/kubernetes-sigs/metrics-server/releases/download/v0.5.0/components.yaml
+```
+
+```text
+k8s.gcr.io/metrics-server/metrics-server:v0.5.0
+```
 
 ## References
 
