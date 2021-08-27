@@ -185,6 +185,26 @@ See: <https://kubernetes.io/docs/setup/production-environment/tools/kubeadm/crea
 kubectl apply -f https://raw.githubusercontent.com/coreos/flannel/v0.14.0/Documentation/kube-flannel.yml
 ```
 
+### Dashboard
+
+> Kubernetes Dashboard is a general purpose, web-based UI for Kubernetes clusters.
+
+<https://github.com/kubernetes/dashboard>
+
+```shell
+kubectl apply -f https://raw.githubusercontent.com/kubernetes/dashboard/v2.3.1/aio/deploy/recommended.yaml
+```
+
+### Metrics Server
+
+> Metrics Server collects resource metrics and exposes them in Kubernetes apiserver.
+
+<https://github.com/kubernetes-sigs/metrics-server>
+
+```shell
+kubectl apply -f https://github.com/kubernetes-sigs/metrics-server/releases/download/v0.5.0/components.yaml
+```
+
 ### Images
 
 As per Kubernetes v1.20.0, here is the list of container images used:
