@@ -31,6 +31,10 @@ Written by Anders Björklund @afbjorklund
 
 June 25, 2019 (Kubernetes version v1.15)
 
+Official method:
+
+- [Kubespray](https://kubernetes.io/docs/setup/production-environment/tools/kubespray/) (HA cluster)
+
 ## Vagrant
 
 You will need to install the `vagrant` tool, in order to run the `Vagrantfile`:
@@ -238,6 +242,9 @@ k8s.gcr.io/metrics-server/metrics-server:v0.5.0
 ```
 
 ## References
+
+Sep 14, 2020 (Kubernetes version v1.19)
+<https://itnext.io/kubernetes-production-cluster-with-vagrant-and-virtualbox-on-mac-8718586f179f>
 
 March 15, 2019 (Kubernetes version v1.13)
 <https://kubernetes.io/blog/2019/03/15/kubernetes-setup-using-ansible-and-vagrant/>
