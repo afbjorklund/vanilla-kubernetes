@@ -227,6 +227,14 @@ kubectl apply -f https://raw.githubusercontent.com/kubernetes/dashboard/v2.3.1/a
 docker.io/kubernetesui/dashboard:v2.3.1
 ```
 
+Note: to be able to _access_ the dashboard you need to create a user, token and proxy:
+
+`kubectl proxy`
+
+<http://localhost:8001/api/v1/namespaces/kubernetes-dashboard/services/https:kubernetes-dashboard:/proxy/.>
+
+<https://github.com/kubernetes/dashboard/blob/master/docs/user/access-control/creating-sample-user.md>
+
 ### Metrics Server
 
 > Metrics Server collects resource metrics and exposes them in Kubernetes apiserver.
@@ -239,6 +247,23 @@ kubectl apply -f https://github.com/kubernetes-sigs/metrics-server/releases/down
 
 ```text
 k8s.gcr.io/metrics-server/metrics-server:v0.5.0
+```
+
+Note: there is a bug in that the server name is not included in the https certificate.
+
+The easiest workaround is editing the metrics-server Deployment, to allow the access:
+
+`kubectl edit deployment -n kube-system metrics-server`
+
+```diff
+@@ -129,6 +129,7 @@
+     spec:
+       containers:
+       - args:
++        - --kubelet-insecure-tls
+         - --cert-dir=/tmp
+         - --secure-port=443
+         - --kubelet-preferred-address-types=InternalIP,ExternalIP,Hostname
 ```
 
 ## References
