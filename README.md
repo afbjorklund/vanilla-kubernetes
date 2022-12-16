@@ -29,7 +29,7 @@ vagrant up
 
 Written by Anders Björklund @afbjorklund
 
-June 25, 2019 (Kubernetes version v1.15)
+Dec 16, 2022 (Kubernetes version v1.25)
 
 Official method:
 
