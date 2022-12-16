@@ -232,6 +232,7 @@ They total a download size of 200 MiB, in their default compressed form.
 <https://github.com/flannel-io/flannel>
 
 ```shell
+rm -f /etc/cni/net.d/*.conf*  # remove any existing CNI configuration, "there can be only one" </highlander>
 kubectl apply -f https://raw.githubusercontent.com/flannel-io/flannel/v0.20.2/Documentation/kube-flannel.yml
 ```
 
