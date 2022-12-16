@@ -101,12 +101,6 @@ You will need to install `ansible-playbook`, in order to run the `playbook.yaml`
 
 See: <https://docs.docker.com/install/linux/docker-ce/ubuntu/>
 
-> To install Docker CE, you need the 64-bit version of one of these Ubuntu versions:
->
-> - Cosmic 18.10
-> - Bionic 18.04 (LTS)
-> - Xenial 16.04 (LTS)
-
 [ansible/roles/docker/tasks/main.yml](ansible/roles/docker/tasks/main.yml)
 
 Packages:
@@ -118,12 +112,6 @@ Packages:
 ### Kubeadm
 
 See: <https://kubernetes.io/docs/setup/production-environment/tools/kubeadm/install-kubeadm/>
-
-> One or more machines running one of:
->
-> - Ubuntu 16.04+
-> - Debian 9
-> - CentOS 7
 
 [ansible/roles/kubeadm/tasks/main.yml](ansible/roles/kubeadm/tasks/main.yml)
 
