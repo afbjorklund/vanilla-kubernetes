@@ -166,6 +166,8 @@ kubeadm init [--pod-network-cidr=10.244.0.0/16]
 
 <https://kubernetes.io/docs/reference/setup-tools/kubeadm/kubeadm-init/>
 
+Note: the change of subnet CIDR is only needed for "flannel" (see below)
+
 ```yaml
 kind: ClusterConfiguration
 apiVersion: kubeadm.k8s.io/v1beta3
