@@ -188,7 +188,7 @@ kubeadm join [--token=... master:6443]
 If you only have room for a single machine, you run pods on the master:
 
 ```shell
-kubectl taint nodes --all node-role.kubernetes.io/control-plane:NoSchedule
+kubectl taint nodes --all node-role.kubernetes.io/control-plane:NoSchedule-
 ```
 
 In a real production environment, you would have multiple masters (HA).
