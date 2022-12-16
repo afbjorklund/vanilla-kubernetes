@@ -137,12 +137,20 @@ Packages:
 
 ### Config
 
+The default kubeadm config doesn't work with docker, only containerd:
+
+```
+Found multiple CRI endpoints on the host. Please define which one do you wish
+to use by setting the 'criSocket' field in the kubeadm configuration file:
+unix:///var/run/containerd/containerd.sock, unix:///var/run/cri-dockerd.sock
+```
+
 Using kubeadm now requires a YAML file, instead of the previous flags:
 
 ```console
 $ vagrant ssh
 ...
-vagrant@kubernetes:~$ sudo kubeadm --config kubeadm-config.yaml init
+vagrant@kubernetes:~$ sudo kubeadm init --config kubeadm-config.yaml
 ```
 
 ```yaml
@@ -151,6 +159,22 @@ kind: InitConfiguration
 nodeRegistration:
   criSocket: unix:///var/run/cri-dockerd.sock
 ```
+`kubeadm config print init-defaults`
+
+```console
+$ vagrant ssh
+...
+vagrant@kubernetes:~$ sudo kubeadm join --config kubeadm-config.yaml ...
+```
+
+```yaml
+apiVersion: kubeadm.k8s.io/v1beta3
+kind: JoinConfiguration
+nodeRegistration:
+  criSocket: unix:///var/run/cri-dockerd.sock
+```
+
+`kubeadm config print join-defaults`
 
 ## Cluster
 
@@ -169,16 +193,18 @@ kubeadm init [--pod-network-cidr=10.244.0.0/16]
 Note: the change of subnet CIDR is only needed for "flannel" (see below)
 
 ```yaml
-kind: ClusterConfiguration
 apiVersion: kubeadm.k8s.io/v1beta3
+kind: ClusterConfiguration
 networking:
   podSubnet: "10.244.0.0/16"
 ```
 
+To see the token again: `kubeadm token create --print-join-command`
+
 Minion:
 
 ```shell
-kubeadm join [--token=... master:6443]
+kubeadm join master:6443 --token ... --discovery-token-ca-cert-hash ...
 ```
 
 <https://kubernetes.io/docs/reference/setup-tools/kubeadm/kubeadm-join/>

@@ -23,11 +23,6 @@
     state: present
     update_cache: true
 
-- name: kubeadm config file
-  template:
-    src: config.yaml.j2
-    dest: kubeadm-config.yaml
-
 - name: cri config file
   template:
     src: crictl.yaml.j2
