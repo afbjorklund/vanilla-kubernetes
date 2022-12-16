@@ -23,18 +23,31 @@
     state: present
     update_cache: true
 
-- name: config directory
+- name: kubeadm config file
+  template:
+    src: config.yaml.j2
+    dest: kubeadm-config.yaml
+
+- name: cri config file
+  template:
+    src: crictl.yaml.j2
+    dest: /etc/crictl.yaml
+    owner: root
+    group: root
+    mode: 0644
+
+- name: cni config directory
   file:
-    path: /var/lib/kubelet
+    path: /etc/cni/net.d
     state: directory
     owner: root
     group: root
     mode: 0755
 
-- name: config file
+- name: cni config file
   copy:
-    src: config.yaml
-    dest: /var/lib/kubelet/config.yaml
+    src: 10-docker-net.conflist
+    dest: /etc/cni/net.d/10-docker-net.conflist
     owner: root
     group: root
     mode: 0644
@@ -42,12 +55,13 @@
 - name: install packages
   apt:
     name: "{{ packages }}"
-    state: latest
   vars:
     packages:
-      - kubeadm
-      - kubelet
-      - kubectl
+      - kubeadm={{ k8s_version }}*
+      - kubelet={{ k8s_version }}*
+      - kubectl={{ k8s_version }}*
+      - cri-tools={{ cri_version }}*
+      - kubernetes-cni={{ cni_version }}*
 
 # See https://github.com/ansible/ansible-modules-core/issues/19 (from 2014)
 

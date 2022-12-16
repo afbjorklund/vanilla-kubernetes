@@ -49,6 +49,13 @@
       - docker-ce-cli
       - containerd.io
 
+# https://kubernetes.io/blog/2020/12/02/dockershim-faq/
+
+- name: install packages
+  apt:
+    deb: "{{ cri_dockerd_deb_url }}"
+    state: present
+
 # https://docs.docker.com/engine/install/linux-postinstall/
 
 - name: add user to docker group

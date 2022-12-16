@@ -1,3 +1,7 @@
 ---
 kubernetes_gpgkey: "https://packages.cloud.google.com/apt/doc/apt-key.gpg"
 kubernetes_repository: "deb https://apt.kubernetes.io/ kubernetes-xenial main"
+k8s_version: "1.25"
+cri_version: "1.25.0"
+cri_socket: "unix:///var/run/cri-dockerd.sock"
+cni_version: "1.1.1"

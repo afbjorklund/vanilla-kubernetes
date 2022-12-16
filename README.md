@@ -109,6 +109,20 @@ Packages:
 - docker-ce-cli
 - containerd\.io
 
+### Requirements
+
+Since Kubernetes version 1.24, it is now **required** to install and configure CRI and CNI:
+
+- cri-tools (<https://github.com/kubernetes-sigs/cri-tools>)
+  `/etc/crictl.yaml`
+- kubernetes-cni (<https://github.com/containernetworking/plugins>)
+  `/etc/cni/net.d`
+
+The default container runtime is containerd, to use docker additional setup is needed:
+
+- cri-dockerd (<https://github.com/Mirantis/cri-dockerd>)
+  `cri-docker.service`
+
 ### Kubeadm
 
 See: <https://kubernetes.io/docs/setup/production-environment/tools/kubeadm/install-kubeadm/>
@@ -120,6 +134,23 @@ Packages:
 - kubeadm
 - kubelet
 - kubectl
+
+### Config
+
+Using kubeadm now requires a YAML file, instead of the previous flags:
+
+```console
+$ vagrant ssh
+...
+vagrant@kubernetes:~$ sudo kubeadm --config kubeadm-config.yaml init
+```
+
+```yaml
+apiVersion: kubeadm.k8s.io/v1beta3
+kind: InitConfiguration
+nodeRegistration:
+  criSocket: unix:///var/run/cri-dockerd.sock
+```
 
 ## Cluster
 
@@ -135,6 +166,13 @@ kubeadm init [--pod-network-cidr=10.244.0.0/16]
 
 <https://kubernetes.io/docs/reference/setup-tools/kubeadm/kubeadm-init/>
 
+```yaml
+kind: ClusterConfiguration
+apiVersion: kubeadm.k8s.io/v1beta3
+networking:
+  podSubnet: "10.244.0.0/16"
+```
+
 Minion:
 
 ```shell
@@ -148,7 +186,7 @@ kubeadm join [--token=... master:6443]
 If you only have room for a single machine, you run pods on the master:
 
 ```shell
-kubectl taint nodes --all node-role.kubernetes.io/master-
+kubectl taint nodes --all node-role.kubernetes.io/control-plane:NoSchedule
 ```
 
 In a real production environment, you would have multiple masters (HA).
@@ -169,23 +207,23 @@ See: <https://kubernetes.io/docs/setup/production-environment/tools/kubeadm/crea
 
 ### Images
 
-As per Kubernetes v1.20.0, here is the list of container images used:
+As per Kubernetes v1.25.0, here is the list of container images used:
 
 ```shell
 kubeadm config images list
 ```
 
 ```text
-k8s.gcr.io/kube-apiserver:v1.20.0
-k8s.gcr.io/kube-controller-manager:v1.20.0
-k8s.gcr.io/kube-scheduler:v1.20.0
-k8s.gcr.io/kube-proxy:v1.20.0
-k8s.gcr.io/pause:3.2
-k8s.gcr.io/etcd:3.4.13-0
-k8s.gcr.io/coredns:1.7.0
+registry.k8s.io/kube-apiserver:v1.25.0
+registry.k8s.io/kube-controller-manager:v1.25.0
+registry.k8s.io/kube-scheduler:v1.25.0
+registry.k8s.io/kube-proxy:v1.25.0
+registry.k8s.io/pause:3.8
+registry.k8s.io/etcd:3.5.4-0
+registry.k8s.io/coredns/coredns:v1.9.3
 ```
 
-They total a download size of 210 MiB, in their default compressed form.
+They total a download size of 200 MiB, in their default compressed form.
 
 ### Flannel
 
