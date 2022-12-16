@@ -229,14 +229,15 @@ They total a download size of 200 MiB, in their default compressed form.
 
 > Flannel is a way to configure a layer 3 network fabric designed for Kubernetes.
 
-<https://github.com/coreos/flannel>
+<https://github.com/flannel-io/flannel>
 
 ```shell
-kubectl apply -f https://raw.githubusercontent.com/coreos/flannel/v0.14.0/Documentation/kube-flannel.yml
+kubectl apply -f https://raw.githubusercontent.com/flannel-io/flannel/v0.20.2/Documentation/kube-flannel.yml
 ```
 
 ```text
-quay.io/coreos/flannel:v0.14.0
+docker.io/flannelcni/flannel:v0.20.2
+docker.io/flannelcni/flannel-cni-plugin:v1.1.0
 ```
 
 ### Dashboard
@@ -246,11 +247,12 @@ quay.io/coreos/flannel:v0.14.0
 <https://github.com/kubernetes/dashboard>
 
 ```shell
-kubectl apply -f https://raw.githubusercontent.com/kubernetes/dashboard/v2.3.1/aio/deploy/recommended.yaml
+kubectl apply -f https://raw.githubusercontent.com/kubernetes/dashboard/v2.7.0/aio/deploy/recommended.yaml
 ```
 
 ```text
-docker.io/kubernetesui/dashboard:v2.3.1
+docker.io/kubernetesui/dashboard:v2.7.0
+docker.io/kubernetesui/metrics-scraper:v1.0.8
 ```
 
 Note: to be able to _access_ the dashboard you need to create a user, token and proxy:
@@ -268,11 +270,11 @@ Note: to be able to _access_ the dashboard you need to create a user, token and 
 <https://github.com/kubernetes-sigs/metrics-server>
 
 ```shell
-kubectl apply -f https://github.com/kubernetes-sigs/metrics-server/releases/download/v0.5.0/components.yaml
+kubectl apply -f https://github.com/kubernetes-sigs/metrics-server/releases/download/v0.6.2/components.yaml
 ```
 
 ```text
-k8s.gcr.io/metrics-server/metrics-server:v0.5.0
+k8s.gcr.io/metrics-server/metrics-server:v0.6.2
 ```
 
 Note: there is a bug in that the server name is not included in the https certificate.
