@@ -323,6 +323,10 @@ The easiest workaround is editing the metrics-server Deployment, to allow the ac
          - --kubelet-preferred-address-types=InternalIP,ExternalIP,Hostname
 ```
 
+`kubectl top node`
+
+`kubectl top pod -A`
+
 ## References
 
 Sep 14, 2020 (Kubernetes version v1.19)
