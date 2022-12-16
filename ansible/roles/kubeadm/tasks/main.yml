@@ -63,6 +63,34 @@
       - cri-tools={{ cri_version }}*
       - kubernetes-cni={{ cni_version }}*
 
+- name: kubeadm pause image
+  shell: kubeadm config images list | grep pause
+  register: pause_image
+
+- name: cri-dockerd service override
+  file:
+    path: /etc/systemd/system/cri-docker.service.d
+    state: directory
+    owner: root
+    group: root
+    mode: 0755
+
+- name: cri-dockerd service override
+  template:
+    src: override.conf.j2
+    dest: /etc/systemd/system/cri-docker.service.d/override.conf
+    owner: root
+    group: root
+    mode: 0644
+  register: service_conf
+
+- name: cri-dockerd service restart
+  systemd:
+    name: cri-docker
+    state: reloaded
+    daemon-reload: true
+  when: service_conf.changed
+
 # See https://github.com/ansible/ansible-modules-core/issues/19 (from 2014)
 
 - name: show hold
