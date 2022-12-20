@@ -51,6 +51,18 @@
 
 # https://kubernetes.io/blog/2020/12/02/dockershim-faq/
 
+- name: set dpkg_arch
+  set_fact:
+    dpkg_arch: amd64
+    cacheable: yes
+  when: ansible_architecture == "x86_64"
+
+- name: set dpkg_arch
+  set_fact:
+    dpkg_arch: arm64
+    cacheable: yes
+  when: ansible_architecture == "aarch_64"
+
 - name: install packages
   apt:
     deb: "{{ cri_dockerd_deb_url }}"
