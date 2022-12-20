@@ -64,9 +64,9 @@
     name: "{{ packages }}"
   vars:
     packages:
-      - kubeadm={{ k8s_version }}*
-      - kubelet={{ k8s_version }}*
-      - kubectl={{ k8s_version }}*
+      - kubeadm
+      - kubelet
+      - kubectl
       - cri-tools={{ cri_version }}*
       - kubernetes-cni={{ cni_version }}*
 
