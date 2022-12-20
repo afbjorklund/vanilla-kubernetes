@@ -23,6 +23,18 @@
     state: present
     update_cache: true
 
+- name: kubeadm config file
+  template:
+    src: init-config.yaml.j2
+    dest: kubeadm-config.yaml
+  when: true  # control-plane
+
+- name: kubeadm config file
+  template:
+    src: join-config.yaml.j2
+    dest: kubeadm-config.yaml
+  when: false  # TODO: worker
+
 - name: cri config file
   template:
     src: crictl.yaml.j2
