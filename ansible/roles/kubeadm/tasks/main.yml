@@ -67,8 +67,8 @@
       - kubeadm
       - kubelet
       - kubectl
-      - cri-tools={{ cri_version }}*
-      - kubernetes-cni={{ cni_version }}*
+      - cri-tools>={{ cri_version }}*
+      - kubernetes-cni>={{ cni_version }}*
 
 - name: kubeadm pause image
   shell: kubeadm config images list | grep pause
