@@ -389,6 +389,10 @@ The easiest workaround is editing the metrics-server Deployment, to allow the ac
 
 `kubectl top pod -A`
 
+## Screenshots
+
+![kubernetes dashboard](assets/kubernetes-dashboard.png)
+
 ## References
 
 Sep 14, 2020 (Kubernetes version v1.19)
