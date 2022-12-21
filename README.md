@@ -299,6 +299,38 @@ docker.io/flannelcni/flannel:v0.20.2
 docker.io/flannelcni/flannel-cni-plugin:v1.1.0
 ```
 
+### Storage
+
+> nfs-server-provisioner is an out-of-tree dynamic provisioner for Kubernetes.
+
+<https://github.com/kubernetes-sigs/nfs-ganesha-server-and-external-provisioner>
+
+```shell
+kubectl apply -f https://raw.githubusercontent.com/kubernetes-sigs/nfs-ganesha-server-and-external-provisioner/nfs-server-provisioner-1.4.0/deploy/kubernetes/rbac.yaml
+kubectl apply -f https://raw.githubusercontent.com/kubernetes-sigs/nfs-ganesha-server-and-external-provisioner/nfs-server-provisioner-1.4.0/deploy/kubernetes/deployment.yaml
+kubectl apply -f https://raw.githubusercontent.com/kubernetes-sigs/nfs-ganesha-server-and-external-provisioner/nfs-server-provisioner-1.4.0/deploy/kubernetes/class.yaml
+```
+
+```text
+k8s.gcr.io/sig-storage/nfs-provisioner:v3.0.0
+```
+
+You can set it (nfs-server-provisioner) to be the cluster default storage class:
+
+```shell
+kubectl patch storageclass example-nfs -p '{"metadata": {"annotations":{"storageclass.kubernetes.io/is-default-class":"true"}}}'
+```
+
+Note: the **node** needs to have support for the `nfsv4` kernel module and nfs-client:
+
+```
+MountVolume.SetUp failed for volume "pvc-..." : mount failed: exit status 32 [...]
+Output: mount: /var/lib/kubelet/pods/.../volumes/kubernetes.io~nfs/pvc-...: bad option;
+for several filesystems (e.g. nfs, cifs) you might need a /sbin/mount.<type> helper program.
+```
+
+`sudo apt install nfs-common`
+
 ### Dashboard
 
 > Kubernetes Dashboard is a general purpose, web-based UI for Kubernetes clusters.
