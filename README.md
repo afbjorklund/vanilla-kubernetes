@@ -176,6 +176,36 @@ nodeRegistration:
 
 `kubeadm config print join-defaults`
 
+## Access
+
+To set up access with the regular `ssh` client, use `vagrant ssh-config`:
+
+```console
+$ vagrant ssh-config >>~/.ssh/config
+```
+
+Then you can just use the name of the node, for _any_ command using ssh:
+
+```console
+$ ssh default
+```
+
+One ssh example would be to tunnel the port of the dashboard (see below):
+
+```console
+$ ssh default -L 8001:127.0.0.1:8001 -N &
+```
+
+To tunnel the apiserver, it needs `--apiserver-cert-extra-sans=127.0.0.1`:
+
+```yaml
+apiVersion: kubeadm.k8s.io/v1beta3
+kind: ClusterConfiguration
+apiServer:
+  certSANs:
+    - "127.0.0.1"
+```
+
 ## Cluster
 
 Now that machines have been prepared, it is time to install Kubernetes.
