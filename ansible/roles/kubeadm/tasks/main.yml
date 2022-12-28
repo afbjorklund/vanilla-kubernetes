@@ -35,6 +35,10 @@
     dest: kubeadm-config.yaml
   when: false  # TODO: worker
 
+- name: cri install package
+  apt:
+    name: cri-tools
+
 - name: cri config file
   template:
     src: crictl.yaml.j2
@@ -42,6 +46,10 @@
     owner: root
     group: root
     mode: 0644
+
+- name: cni install package
+  apt:
+    name: kubernetes-cni
 
 - name: cni config directory
   file:
@@ -67,8 +75,6 @@
       - kubeadm
       - kubelet
       - kubectl
-      - cri-tools>={{ cri_version }}*
-      - kubernetes-cni>={{ cni_version }}*
 
 - name: kubeadm pause image
   shell: kubeadm config images list | grep pause
