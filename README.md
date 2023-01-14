@@ -391,6 +391,8 @@ The easiest workaround is editing the metrics-server Deployment, to allow the ac
 
 ## Screenshots
 
+![virtualbox manager](assets/virtualbox-manager.png)
+
 ![kubernetes dashboard](assets/kubernetes-dashboard.png)
 
 ## References
