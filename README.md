@@ -224,6 +224,8 @@ Remotely from host:
 
 `dockerd-rootless-setuptool.sh install --force`
 
+`docker context use default`
+
 See: <https://docs.docker.com/engine/security/rootless/>
 
 Now there are _two_ different daemons:
