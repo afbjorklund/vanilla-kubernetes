@@ -198,6 +198,12 @@ $ ssh default -L 8001:127.0.0.1:8001 -N &
 
 To tunnel the apiserver, it needs `--apiserver-cert-extra-sans=127.0.0.1`:
 
+```console
+$ ssh default -L 6443:127.0.0.1:6443 -N &
+```
+
+`Unable to connect to the server: x509: certificate is valid for 10.96.0.1, 10.0.2.15, not 127.0.0.1`
+
 ```yaml
 apiVersion: kubeadm.k8s.io/v1beta3
 kind: ClusterConfiguration
