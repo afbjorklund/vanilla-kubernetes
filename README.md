@@ -268,6 +268,12 @@ To access rootless docker over ssh, edit `~/.bashrc`:
      *i*) ;;
 ```
 
+To build images rootless, and load them in cluster:
+
+`docker --context=rootless build -t myimage`
+
+`docker --context=rootless save myimage | docker --context=default load`
+
 ## Cluster
 
 Now that machines have been prepared, it is time to install Kubernetes.
