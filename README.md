@@ -216,6 +216,56 @@ Remotely from host:
 
 `DOCKER_HOST=ssh://default docker version`
 
+### Rootless
+
+`sudo apt install -y uidmap`
+
+`echo "$(whoami):100000:65536" | sudo tee -a /etc/subuid`
+
+`dockerd-rootless-setuptool.sh install --force`
+
+See: <https://docs.docker.com/engine/security/rootless/>
+
+Now there are _two_ different daemons:
+
+#### System
+
+`docker --context=default info`
+
+`DOCKER_HOST=unix://var/run/docker.sock`
+
+```shell
+vagrant@kubernetes:~$ systemctl status --system docker
+● docker.service - Docker Application Container Engine
+...
+```
+
+#### User
+
+`docker --context=rootless info`
+
+`DOCKER_HOST=unix://$XDG_RUNTIME_DIR/docker.sock`
+
+```shell
+vagrant@kubernetes:~$ systemctl status --user docker
+● docker.service - Docker Application Container Engine (Rootless)
+...
+```
+
+To access rootless docker over ssh, edit `~/.bashrc`:
+
+```diff
+@@ -2,6 +2,9 @@
+ # see /usr/share/doc/bash/examples/startup-files (in the package bash-doc)
+ # for examples
+ 
++DOCKER_HOST=unix://$XDG_RUNTIME_DIR/docker.sock
++
+ # If not running interactively, don't do anything
+ case $- in
+     *i*) ;;
+```
+
 ## Cluster
 
 Now that machines have been prepared, it is time to install Kubernetes.
