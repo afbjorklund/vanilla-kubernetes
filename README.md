@@ -206,6 +206,16 @@ apiServer:
     - "127.0.0.1"
 ```
 
+### Docker
+
+Locally on node:
+
+`ssh default docker version`
+
+Remotely from host:
+
+`DOCKER_HOST=ssh://default docker version`
+
 ## Cluster
 
 Now that machines have been prepared, it is time to install Kubernetes.
