@@ -79,6 +79,13 @@
 - name: kubeadm pause image
   shell: kubeadm config images list | grep pause
   register: pause_image
+  changed_when: k8s_pause_image is not defined or k8s_pause_image != pause_image.stdout
+
+- name: cache pause image
+  set_fact:
+    k8s_pause_image: "{{ pause_image.stdout }}"
+    cacheable: true
+  when: not pause_image.failed
 
 - name: cri-dockerd service override
   file:
