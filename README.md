@@ -122,6 +122,8 @@ The default container runtime is containerd, to use docker additional setup is n
 
 - cri-dockerd (<https://github.com/Mirantis/cri-dockerd>)
   `cri-docker.service`
+- `docker-net` (simple `cni0` bridge single-node network)
+  [10-docker-net.conflist](ansible/roles/kubeadm/files/10-docker-net.conflist)
 
 ### Kubeadm
 
