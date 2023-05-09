@@ -75,9 +75,20 @@
     cacheable: yes
   when: ansible_architecture == "aarch_64"
 
+- name: check packages
+  stat:
+    path: "/var/cache/apt/archives/{{ cri_dockerd_deb }}"
+  register: cache_cri_docker_deb
+
+- name: download packages
+  get_url:
+    url: "{{ cri_dockerd_deb_url }}"
+    dest: "/var/cache/apt/archives/{{ cri_dockerd_deb }}"
+  when: not cache_cri_docker_deb.stat.exists
+
 - name: install packages
   apt:
-    deb: "{{ cri_dockerd_deb_url }}"
+    deb: "/var/cache/apt/archives/{{ cri_dockerd_deb }}"
     state: present
 
 # https://docs.docker.com/engine/install/linux-postinstall/
