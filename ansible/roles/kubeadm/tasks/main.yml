@@ -81,11 +81,23 @@
   register: kubeadm_version
   changed_when: k8s_kubeadm_version is not defined or k8s_kubeadm_version != kubeadm_version.stdout
 
+- name: kubeadm images list
+  shell: kubeadm config images list --kubernetes-version={{ kubeadm_version.stdout }}
+  register: kubeadm_images
+  changed_when: k8s_kubeadm_version is not defined or k8s_kubeadm_version != kubeadm_version.stdout
+
 - name: cache kubeadm version
   set_fact:
     k8s_kubeadm_version: "{{ kubeadm_version.stdout }}"
     cacheable: true
   when: not kubeadm_version.failed
+
+- name: kubeadm images text
+  copy:
+    content: "{{ kubeadm_images.stdout }}"
+    dest: kubernetes-{{ k8s_kubeadm_version }}-images.txt
+  when:
+    not kubeadm_images.failed
 
 - name: kubeadm pause image
   shell: set -o pipefail; kubeadm config images list | grep pause
