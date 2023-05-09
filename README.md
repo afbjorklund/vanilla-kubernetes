@@ -357,6 +357,26 @@ registry.k8s.io/coredns/coredns:v1.9.3
 
 They total a download size of 200 MiB, in their default compressed form.
 
+To download all the kubernetes images to the current container runtime:
+
+```shell
+kubeadm config images pull
+```
+
+Use `docker save` to save all images in a tar archive, for `docker load`.
+
+Optionally use `pigz` or `pixz`, to compress the contents of the .tar file.
+
+```text
+Loaded image: registry.k8s.io/kube-apiserver:v1.25.0
+Loaded image: registry.k8s.io/kube-controller-manager:v1.25.0
+Loaded image: registry.k8s.io/kube-scheduler:v1.25.0
+Loaded image: registry.k8s.io/kube-proxy:v1.25.0
+Loaded image: registry.k8s.io/pause:3.8
+Loaded image: registry.k8s.io/etcd:3.5.4-0
+Loaded image: registry.k8s.io/coredns/coredns:v1.9.3
+```
+
 ### Flannel
 
 > Flannel is a way to configure a layer 3 network fabric designed for Kubernetes.

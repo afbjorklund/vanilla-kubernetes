@@ -4,3 +4,7 @@ facts
 images
 *.orig
 *.log
+kubernetes-*.txt
+kubernetes-*.tar
+kubernetes-*.tgz
+kubernetes-*.txz
