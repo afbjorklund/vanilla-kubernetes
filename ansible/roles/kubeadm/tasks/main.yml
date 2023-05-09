@@ -88,7 +88,9 @@
   when: not kubeadm_version.failed
 
 - name: kubeadm pause image
-  shell: kubeadm config images list | grep pause
+  shell: set -o pipefail; kubeadm config images list | grep pause
+  args:
+    executable: /bin/bash
   register: pause_image
   changed_when: k8s_pause_image is not defined or k8s_pause_image != pause_image.stdout
 
@@ -113,14 +115,7 @@
     owner: root
     group: root
     mode: 0644
-  register: service_conf
-
-- name: cri-dockerd service restart
-  systemd:
-    name: cri-docker
-    state: reloaded
-    daemon-reload: true
-  when: service_conf.changed
+  notify: cri-dockerd service restart
 
 # See https://github.com/ansible/ansible-modules-core/issues/19 (from 2014)
 

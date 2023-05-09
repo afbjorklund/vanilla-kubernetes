@@ -1,0 +1,5 @@
+- name: cri-dockerd service restart
+  systemd:
+    name: cri-docker
+    state: reloaded
+    daemon-reload: true
