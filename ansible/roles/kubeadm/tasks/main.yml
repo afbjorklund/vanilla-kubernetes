@@ -94,7 +94,7 @@
 
 - name: kubeadm images text
   copy:
-    content: "{{ kubeadm_images.stdout }}"
+    content: "{{ kubeadm_images.stdout }}\n"
     dest: kubernetes-{{ k8s_kubeadm_version }}-images.txt
   when:
     not kubeadm_images.failed
