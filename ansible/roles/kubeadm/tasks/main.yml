@@ -76,6 +76,17 @@
       - kubelet
       - kubectl
 
+- name: kubeadm short version
+  shell: kubeadm version --output short
+  register: kubeadm_version
+  changed_when: k8s_kubeadm_version is not defined or k8s_kubeadm_version != kubeadm_version.stdout
+
+- name: cache kubeadm version
+  set_fact:
+    k8s_kubeadm_version: "{{ kubeadm_version.stdout }}"
+    cacheable: true
+  when: not kubeadm_version.failed
+
 - name: kubeadm pause image
   shell: kubeadm config images list | grep pause
   register: pause_image

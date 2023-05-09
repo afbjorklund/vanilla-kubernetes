@@ -49,6 +49,18 @@
       - docker-ce-cli
       - containerd.io
 
+- name: docker server version
+  shell: docker version --format '{{ "{{ .Server.Version }}" }}'
+  become: yes
+  register: docker_version
+  changed_when: k8s_docker_version is not defined or k8s_docker_version != docker_version.stdout
+
+- name: cache docker version
+  set_fact:
+    k8s_docker_version: "{{ docker_version.stdout }}"
+    cacheable: true
+  when: not docker_version.failed
+
 # https://kubernetes.io/blog/2020/12/02/dockershim-faq/
 
 - name: set dpkg_arch
