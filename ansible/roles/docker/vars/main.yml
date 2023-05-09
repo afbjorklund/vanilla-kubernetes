@@ -1,5 +1,6 @@
 ---
 docker_gpgkey: "https://download.docker.com/linux/ubuntu/gpg"
 docker_repository: "deb https://download.docker.com/linux/ubuntu {{ ansible_lsb.codename }} stable"
-cri_dockerd_version: "0.3.0"
-cri_dockerd_deb_url: "https://github.com/Mirantis/cri-dockerd/releases/download/v{{ cri_dockerd_version }}/cri-dockerd_{{ cri_dockerd_version }}.3-0.ubuntu-{{ ansible_lsb.codename }}_{{ dpkg_arch }}.deb"
+cri_dockerd_version: "0.3.1"
+cri_dockerd_deb_version: "3"
+cri_dockerd_deb_url: "https://github.com/Mirantis/cri-dockerd/releases/download/v{{ cri_dockerd_version }}/cri-dockerd_{{ cri_dockerd_version }}.{{ cri_dockerd_deb_version }}-0.ubuntu-{{ ansible_lsb.codename }}_{{ dpkg_arch }}.deb"
