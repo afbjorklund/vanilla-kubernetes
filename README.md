@@ -52,7 +52,7 @@ end
 The virtual machine is packed into a .box, for each provider (such as VirtualBox):
 
 ```ruby
-  config.vm.box = "ubuntu/xenial64"
+  config.vm.box = "ubuntu/focal64"
   config.vm.box_check_update = true
 ```
 
