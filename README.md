@@ -29,7 +29,7 @@ vagrant up
 
 Written by Anders Björklund @afbjorklund
 
-Dec 16, 2022 (Kubernetes version v1.25)
+May 08, 2023 (Kubernetes version v1.27)
 
 Official method:
 
@@ -339,20 +339,20 @@ See: <https://kubernetes.io/docs/setup/production-environment/tools/kubeadm/crea
 
 ### Images
 
-As per Kubernetes v1.25.0, here is the list of container images used:
+As per Kubernetes v1.27.0, here is the list of container images used:
 
 ```shell
 kubeadm config images list
 ```
 
 ```text
-registry.k8s.io/kube-apiserver:v1.25.0
-registry.k8s.io/kube-controller-manager:v1.25.0
-registry.k8s.io/kube-scheduler:v1.25.0
-registry.k8s.io/kube-proxy:v1.25.0
-registry.k8s.io/pause:3.8
-registry.k8s.io/etcd:3.5.4-0
-registry.k8s.io/coredns/coredns:v1.9.3
+registry.k8s.io/kube-apiserver:v1.27.0
+registry.k8s.io/kube-controller-manager:v1.27.0
+registry.k8s.io/kube-scheduler:v1.27.0
+registry.k8s.io/kube-proxy:v1.27.0
+registry.k8s.io/pause:3.9
+registry.k8s.io/etcd:3.5.7-0
+registry.k8s.io/coredns/coredns:v1.10.1
 ```
 
 They total a download size of 200 MiB, in their default compressed form.
@@ -368,13 +368,13 @@ Use `docker save` to save all images in a tar archive, for `docker load`.
 Optionally use `pigz` or `pixz`, to compress the contents of the .tar file.
 
 ```text
-Loaded image: registry.k8s.io/kube-apiserver:v1.25.0
-Loaded image: registry.k8s.io/kube-controller-manager:v1.25.0
-Loaded image: registry.k8s.io/kube-scheduler:v1.25.0
-Loaded image: registry.k8s.io/kube-proxy:v1.25.0
-Loaded image: registry.k8s.io/pause:3.8
-Loaded image: registry.k8s.io/etcd:3.5.4-0
-Loaded image: registry.k8s.io/coredns/coredns:v1.9.3
+Loaded image: registry.k8s.io/kube-apiserver:v1.27.0
+Loaded image: registry.k8s.io/kube-controller-manager:v1.27.0
+Loaded image: registry.k8s.io/kube-scheduler:v1.27.0
+Loaded image: registry.k8s.io/kube-proxy:v1.27.0
+Loaded image: registry.k8s.io/pause:3.9
+Loaded image: registry.k8s.io/etcd:3.5.7-0
+Loaded image: registry.k8s.io/coredns/coredns:v1.10.1
 ```
 
 ### Flannel
@@ -385,11 +385,11 @@ Loaded image: registry.k8s.io/coredns/coredns:v1.9.3
 
 ```shell
 rm -f /etc/cni/net.d/*.conf*  # remove any existing CNI configuration, "there can be only one" </highlander>
-kubectl apply -f https://raw.githubusercontent.com/flannel-io/flannel/v0.20.2/Documentation/kube-flannel.yml
+kubectl apply -f https://raw.githubusercontent.com/flannel-io/flannel/v0.21.2/Documentation/kube-flannel.yml
 ```
 
 ```text
-docker.io/flannelcni/flannel:v0.20.2
+docker.io/flannelcni/flannel:v0.21.2
 docker.io/flannelcni/flannel-cni-plugin:v1.1.0
 ```
 
@@ -459,7 +459,7 @@ kubectl apply -f https://github.com/kubernetes-sigs/metrics-server/releases/down
 ```
 
 ```text
-k8s.gcr.io/metrics-server/metrics-server:v0.6.2
+k8s.gcr.io/metrics-server/metrics-server:v0.6.3
 ```
 
 Note: there is a bug in that the server name is not included in the https certificate.
